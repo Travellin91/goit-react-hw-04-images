@@ -72,7 +72,7 @@ const App = () => {
       setIsLastPage(false);
       fetchGalleryItems();
     }
-  }, [searchQuery, page, images]);;
+  }, [searchQuery, page, images]);
 
   const handleSubmit = newSearchQuery => {
     if (searchQuery === newSearchQuery) {
