@@ -1,14 +1,13 @@
 {
   "files": {
-    "main.css": "/goit-react-hw-04-images/static/css/main.b9916dc6.css",
-    "main.js": "/goit-react-hw-04-images/static/js/main.29cec099.js",
-    "static/media/gimn-ukrainy-Ponomarev.mp3": "/goit-react-hw-04-images/static/media/gimn-ukrainy-Ponomarev.db67d6de74b5cfb2edb3.mp3",
+    "main.css": "/goit-react-hw-04-images/static/css/main.3e16dec6.css",
+    "main.js": "/goit-react-hw-04-images/static/js/main.86fd953b.js",
     "index.html": "/goit-react-hw-04-images/index.html",
-    "main.b9916dc6.css.map": "/goit-react-hw-04-images/static/css/main.b9916dc6.css.map",
-    "main.29cec099.js.map": "/goit-react-hw-04-images/static/js/main.29cec099.js.map"
+    "main.3e16dec6.css.map": "/goit-react-hw-04-images/static/css/main.3e16dec6.css.map",
+    "main.86fd953b.js.map": "/goit-react-hw-04-images/static/js/main.86fd953b.js.map"
   },
   "entrypoints": [
-    "static/css/main.b9916dc6.css",
-    "static/js/main.29cec099.js"
+    "static/css/main.3e16dec6.css",
+    "static/js/main.86fd953b.js"
   ]
 }
