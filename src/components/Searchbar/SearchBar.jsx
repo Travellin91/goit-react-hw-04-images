@@ -1,82 +1,167 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { MdOutlineImageSearch } from 'react-icons/md';
 import CountryFlag from 'react-country-flag';
 import './searchbar.css';
-import anthemUkraine from './gimn-ukrainy-Ponomarev.mp3';
+import YouTube from 'react-youtube';
 
-class Searchbar extends Component {
-  state = {
-    searchQuery: '',
-    isPlaying: false,
+const Searchbar = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+
+  const handleChange = event => {
+    setSearchQuery(event.target.value);
   };
 
-  handleChange = event => {
-    this.setState({ searchQuery: event.target.value });
-  };
-
-  handleSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    if (!this.state.searchQuery.trim()) {
+    if (searchQuery.trim() === '') {
       return;
     }
-    this.props.onSubmit(this.state.searchQuery);
   };
 
-  handleFlagClick = () => {
-    const { isPlaying } = this.state;
-
-    if (this.audio) {
-      this.audio.pause();
-      this.audio.currentTime = 0;
-      this.audio = null;
+  const handleFlagClick = () => {
+    if (isPlaying) {
+      return;
     }
-
-    if (!isPlaying) {
-      this.audio = new Audio(anthemUkraine);
-      this.audio.play();
-    }
-
-    this.setState({ isPlaying: !isPlaying });
+    setIsPlaying(true);
+    setIsVideoPlaying(true);
   };
 
-  render() {
-    const { isPlaying } = this.state;
+  const handleVideoEnded = () => {
+    setIsPlaying(false);
+    setIsVideoPlaying(false);
+  };
 
-    return (
+  const youtubeOpts = {
+    height: '360',
+    width: '640',
+    playerVars: {
+      autoplay: 1,
+    },
+  };
+
+  return (
+    <div className="searchbar-container">
       <header className="searchbar">
         <div className="flags">
           <CountryFlag
             countryCode="UA"
             svg
-            onClick={this.handleFlagClick}
+            onClick={handleFlagClick}
             style={{ width: '40px', height: '40px' }}
-            
           />
-          <span onClick={this.handleFlagClick}>{isPlaying ? '' : ''}</span>
+          {isPlaying ? '' : ''}
         </div>
-        <form className="SearchForm" onSubmit={this.handleSubmit}>
+        <form className="SearchForm" onSubmit={handleSubmit}>
           <button type="submit" className="SearchForm_button">
-            <MdOutlineImageSearch className="SearchForm_icon" size={24} onClick={this.handleClearSearch}/>
+            <MdOutlineImageSearch className="SearchForm_icon" size={24} />
             <span className="SearchForm_button_label">Пошук</span>
           </button>
           <input
             className="SearchForm_input"
-            onChange={this.handleChange}
+            onChange={handleChange}
             type="text"
             autoComplete="off"
             autoFocus
             placeholder="Пошук зображень та фотографій"
-            value={this.state.searchQuery}
+            value={searchQuery}
           />
         </form>
       </header>
-    );
-  }
-}
+      {isVideoPlaying && (
+        <div className="video-container">
+          <YouTube
+            videoId="zNFUqradyV4" 
+            opts={youtubeOpts}
+            onEnd={handleVideoEnded}
+          />
+        </div>
+      )}
+    </div>
+  );
+};
 
 Searchbar.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
 
 export default Searchbar;
+
+
+// class Searchbar extends Component {
+//   state = {
+//     searchQuery: '',
+//     isPlaying: false,
+//   };
+
+//   handleChange = event => {
+//     this.setState({ searchQuery: event.target.value });
+//   };
+
+//   handleSubmit = e => {
+//     e.preventDefault();
+//     if (!this.state.searchQuery.trim()) {
+//       return;
+//     }
+//     this.props.onSubmit(this.state.searchQuery);
+//   };
+
+//   handleFlagClick = () => {
+//     const { isPlaying } = this.state;
+
+//     if (this.audio) {
+//       this.audio.pause();
+//       this.audio.currentTime = 0;
+//       this.audio = null;
+//     }
+
+//     if (!isPlaying) {
+//       this.audio = new Audio(anthemUkraine);
+//       this.audio.play();
+//     }
+
+//     this.setState({ isPlaying: !isPlaying });
+//   };
+
+//   render() {
+//     const { isPlaying } = this.state;
+
+//     return (
+//       <header className="searchbar">
+//         <div className="flags">
+//           <CountryFlag
+//             countryCode="UA"
+//             svg
+//             onClick={this.handleFlagClick}
+//             style={{ width: '40px', height: '40px' }}
+            
+//           />
+//           <span onClick={this.handleFlagClick}>{isPlaying ? '' : ''}</span>
+//         </div>
+//         <form className="SearchForm" onSubmit={this.handleSubmit}>
+//           <button type="submit" className="SearchForm_button">
+//             <MdOutlineImageSearch className="SearchForm_icon" size={24} onClick={this.handleClearSearch}/>
+//             <span className="SearchForm_button_label">Пошук</span>
+//           </button>
+//           <input
+//             className="SearchForm_input"
+//             onChange={this.handleChange}
+//             type="text"
+//             autoComplete="off"
+//             autoFocus
+//             placeholder="Пошук зображень та фотографій"
+//             value={this.state.searchQuery}
+//           />
+//         </form>
+//       </header>
+//     );
+//   }
+// }
+
+// Searchbar.propTypes = {
+//   onSubmit: PropTypes.func.isRequired,
+// };
+
+// export default Searchbar;
