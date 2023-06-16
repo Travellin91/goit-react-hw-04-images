@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import './imagegalery.css';
 import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
 
 const ImageGallery = ({ images, onItemClick }) => {
+  const memoizedImages = useMemo(() => images, [images]);
+
   return (
     <div className="ImageGallery">
-      {images.map(image => (
+      {memoizedImages.map(image => (
         <ImageGalleryItem
           key={image.id}
           image={image}

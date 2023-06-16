@@ -18,7 +18,6 @@ const App = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [isLastPage, setIsLastPage] = useState(false);
-  const [isButtonShow, setIsButtonShow] = useState(false);
 
   useEffect(() => {
     const fetchGalleryItems = async () => {
@@ -28,35 +27,21 @@ const App = () => {
       try {
         const { hits, totalHits } = await getImages(searchQuery, page);
 
-        const newData = hits.map(
-          ({ id, tags, webformatURL, largeImageURL }) => ({
-            id,
-            tags,
-            webformatURL,
-            largeImageURL,
-          })
-        );
-
-        setImages(prevImages => [...prevImages, ...newData]);
-
-        if (!totalHits) {
-          setIsLoading(false);
+        if (totalHits === 0) {
           setError(true);
           toast.warn(
             'Sorry, there are no images matching your search query. Please try again.'
           );
-          return;
+        } else {
+          setImages(prevImages => [...prevImages, ...hits]);
         }
-
-        setIsLoading(false);
-        setIsButtonShow(true);
-        setError(false);
       } catch (error) {
         console.error(error);
-        setIsLoading(false);
         setError(true);
         toast.error('Oops! Something went wrong. Please try again later.');
       }
+
+      setIsLoading(false);
     };
 
     if (searchQuery.trim() !== '') {
@@ -68,9 +53,6 @@ const App = () => {
   }, [searchQuery, page]);
 
   const handleSubmit = newSearchQuery => {
-    if (searchQuery === newSearchQuery) {
-      return;
-    }
     setSearchQuery(newSearchQuery);
   };
 
@@ -99,8 +81,13 @@ const App = () => {
           Oops! Something went wrong. Please try again later.
         </p>
       )}
-      <ImageGallery images={images} onItemClick={handleImageClick} />
-      {isButtonShow && !isLastPage && <Button onClick={handleLoadMore} />}
+      <ImageGallery
+        images={[...images].reverse()}
+        onItemClick={handleImageClick}
+      />
+      {images.length > 0 && !isLoading && !isLastPage && (
+        <Button onClick={handleLoadMore}>Load More</Button>
+      )}
       {showModal && <Modal image={selectedImage} onClose={handleModalClose} />}
       <ToastContainer transition={Flip} autoClose={3000} />
     </div>
