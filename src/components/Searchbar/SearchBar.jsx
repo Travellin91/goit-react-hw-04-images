@@ -16,9 +16,7 @@ const Searchbar = ({ onSubmit }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    if (searchQuery.trim() === '') {
-      return;
-    }
+    if (searchQuery.trim() === '') return;
     onSubmit(searchQuery);
   };
 
@@ -87,10 +85,6 @@ Searchbar.propTypes = {
 
 export default Searchbar;
 
-
-
-
-
 // class Searchbar extends Component {
 //   state = {
 //     searchQuery: '',
@@ -137,7 +131,7 @@ export default Searchbar;
 //             svg
 //             onClick={this.handleFlagClick}
 //             style={{ width: '40px', height: '40px' }}
-            
+
 //           />
 //           <span onClick={this.handleFlagClick}>{isPlaying ? '' : ''}</span>
 //         </div>

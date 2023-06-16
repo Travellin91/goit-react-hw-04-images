@@ -28,15 +28,16 @@ const App = () => {
       try {
         const { hits, totalHits } = await getImages(searchQuery, page);
 
-        const newData = hits.map(({ id, tags, webformatURL, largeImageURL }) => ({
-          id,
-          tags,
-          webformatURL,
-          largeImageURL,
-        }));
+        const newData = hits.map(
+          ({ id, tags, webformatURL, largeImageURL }) => ({
+            id,
+            tags,
+            webformatURL,
+            largeImageURL,
+          })
+        );
 
-        const currentData = [...images, ...newData];
-        setImages(currentData);
+        setImages(prevImages => [...prevImages, ...newData]);
 
         if (!totalHits) {
           setIsLoading(false);
@@ -44,14 +45,6 @@ const App = () => {
           toast.warn(
             'Sorry, there are no images matching your search query. Please try again.'
           );
-          return;
-        }
-
-        if (currentData.length >= totalHits) {
-          setIsLoading(false);
-          setIsButtonShow(false);
-          setError(false);
-          setIsLastPage(true);
           return;
         }
 
@@ -72,7 +65,7 @@ const App = () => {
       setIsLastPage(false);
       fetchGalleryItems();
     }
-  }, [searchQuery, page, images]);
+  }, [searchQuery, page]);
 
   const handleSubmit = newSearchQuery => {
     if (searchQuery === newSearchQuery) {
@@ -102,7 +95,9 @@ const App = () => {
       <Searchbar onSubmit={handleSubmit} />
       {isLoading && <Loader />}
       {error && !isLoading && (
-        <p className="Error">Oops! Something went wrong. Please try again later.</p>
+        <p className="Error">
+          Oops! Something went wrong. Please try again later.
+        </p>
       )}
       <ImageGallery images={images} onItemClick={handleImageClick} />
       {isButtonShow && !isLastPage && <Button onClick={handleLoadMore} />}
@@ -113,25 +108,6 @@ const App = () => {
 };
 
 export default App;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // class App extends Component {
 //   constructor() {
@@ -148,7 +124,6 @@ export default App;
 //       isButtonShow: false,
 //     };
 //   }
-
 
 //   componentDidUpdate(_prevProps, prevState) {
 //     const prevQuery = prevState.searchQuery;
