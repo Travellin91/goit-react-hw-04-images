@@ -5,7 +5,7 @@ import CountryFlag from 'react-country-flag';
 import './searchbar.css';
 import YouTube from 'react-youtube';
 
-const Searchbar = () => {
+const Searchbar = ({ onSubmit }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isPlaying, setIsPlaying] = useState(false);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
@@ -19,14 +19,12 @@ const Searchbar = () => {
     if (searchQuery.trim() === '') {
       return;
     }
+    onSubmit(searchQuery);
   };
 
   const handleFlagClick = () => {
-    if (isPlaying) {
-      return;
-    }
-    setIsPlaying(true);
-    setIsVideoPlaying(true);
+    setIsPlaying(prevIsPlaying => !prevIsPlaying);
+    setIsVideoPlaying(prevIsPlaying => !prevIsPlaying);
   };
 
   const handleVideoEnded = () => {
@@ -73,7 +71,7 @@ const Searchbar = () => {
       {isVideoPlaying && (
         <div className="video-container">
           <YouTube
-            videoId="zNFUqradyV4" 
+            videoId="zNFUqradyV4"
             opts={youtubeOpts}
             onEnd={handleVideoEnded}
           />
@@ -88,6 +86,9 @@ Searchbar.propTypes = {
 };
 
 export default Searchbar;
+
+
+
 
 
 // class Searchbar extends Component {
