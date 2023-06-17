@@ -45,15 +45,16 @@ const App = () => {
     };
 
     if (searchQuery.trim() !== '') {
-      setPage(1);
-      setImages([]);
-      setIsLastPage(false);
       fetchGalleryItems();
     }
   }, [searchQuery, page]);
 
   const handleSubmit = newSearchQuery => {
-    setSearchQuery(newSearchQuery);
+    if (searchQuery === newSearchQuery.trim()) return;
+    setSearchQuery(newSearchQuery.trim());
+    setPage(1);
+    setImages([]);
+    setIsLastPage(false);
   };
 
   const handleImageClick = image => {
@@ -81,10 +82,7 @@ const App = () => {
           Oops! Something went wrong. Please try again later.
         </p>
       )}
-      <ImageGallery
-        images={[...images].reverse()}
-        onItemClick={handleImageClick}
-      />
+      <ImageGallery images={images} onItemClick={handleImageClick} />
       {images.length > 0 && !isLoading && !isLastPage && (
         <Button onClick={handleLoadMore}>Load More</Button>
       )}
