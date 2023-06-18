@@ -1,3 +1,4 @@
+/* searchbar.css */
 
 .searchbar {
   top: 0;
@@ -8,24 +9,27 @@
   justify-content: center;
   align-items: center;
   min-height: 64px;
-  padding-right: 24px;
-  padding-left: 24px;
-  padding-top: 12px;
-  padding-bottom: 12px;
+  padding: 12px;
   color: #fff;
   background-color: #071a87;
   box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
     0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
 }
 
-/*
- * Стили компонента SearchForm
- */
+.flags {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
 .SearchForm {
   display: flex;
   align-items: center;
-  width: 100%;
+  justify-content: center;
+  flex-grow: 1;
   max-width: 600px;
+  margin: 0 10px;
   background-color: #fff;
   border-radius: 3px;
   overflow: hidden;
@@ -69,8 +73,8 @@
   font-size: 20px;
   border: none;
   outline: none;
-  padding-left: 4px;
-  padding-right: 4px;
+  padding: 4px;
+  text-align: center;
 }
 
 .SearchForm-input::placeholder {
@@ -78,32 +82,31 @@
   font-size: 18px;
 }
 
-.react-flags-select {
-  width: 30px;
-  height: 20px;
-  margin-right: 10px;
-}
-
-.react-flags-select .arrow-down {
-  display: none;
-}
-
-.country-flag-select .filter-box {
-  display: none;
-}
-
-.country-flag-select .filter-text {
-  display: none;
-}
-.flags{
-  left: 0px;
-  position: absolute;
-  margin-left: 10px;
-  cursor: pointer;
-}
-
 .video-container {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+@media (max-width: 768px) {
+  .searchbar {
+    padding: 10px;
+    min-height: auto;
+  }
+
+  .flags {
+    margin-left: 10px;
+  }
+
+  .SearchForm {
+    max-width: none;
+    width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+    background-color: transparent;
+  }
+
+  .SearchForm-input {
+    font-size: 16px;
+  }
 }
